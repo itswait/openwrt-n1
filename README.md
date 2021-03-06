@@ -4,16 +4,14 @@
 
 OpenWrt Personal Build For Phicomm N1
 
-## Acknowledgments
+## Credits
+
+This repo relies on the following third-party projects
 
 - [coolsnowwolf/lede](https://github.com/coolsnowwolf/lede)
-- [flippy/kernel](https://www.right.com.cn/forum/space-uid-285101.html)
+- [unifreq/openwrt_packit](https://github.com/unifreq/openwrt_packit)
+- [P3TERX/Actions-OpenWrt](https://github.com/P3TERX/Actions-OpenWrt)
 - [tuanqing/mknop](https://github.com/tuanqing/mknop)
 - [fw876/helloworld](https://github.com/fw876/helloworld)
 - [jerrykuku/luci-theme-argon](https://github.com/jerrykuku/luci-theme-argon)
-- [P3TERX/Actions-OpenWrt](https://github.com/P3TERX/Actions-OpenWrt)
 - [Mattraks/delete-workflow-runs](https://github.com/Mattraks/delete-workflow-runs)
-
-## License
-
-[MIT](https://github.com/P3TERX/Actions-OpenWrt/blob/main/LICENSE) © P3TERX

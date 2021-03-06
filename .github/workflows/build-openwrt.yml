@@ -11,9 +11,10 @@
 name: Build OpenWrt
 
 on:
+  push:
   workflow_dispatch:
   schedule:
-   - cron: '0 20 */5 * *'
+   - cron: '0 20 */3 * *'
 
 env:
   REPO_URL: https://github.com/coolsnowwolf/lede
@@ -97,28 +98,23 @@ jobs:
         cd openwrt
         echo -e "$(nproc) thread compile"
         make -j$(nproc) || make -j1 || make -j1 V=s
-        echo "::set-output name=status::success"
         echo "FILE_DATE=$(date +"%Y%m%d%H%M")" >> $GITHUB_ENV
 
     - name: Patch flippy kernel
       id: patch
-      if: steps.compile.outputs.status == 'success'
       run: |
         cd mknop
         mv ../openwrt/bin/targets/*/*/*-rootfs.tar.gz openwrt
         sudo ./gen_openwrt -m $MKNOP_DEVICE -d
-        echo "::set-output name=status::success"
 
     - name: Upload armvirt firmware to artifact
       uses: actions/upload-artifact@main
-      if: steps.compile.outputs.status == 'success'
       with:
         name: openwrt_armvirt-64_${{ env.FILE_DATE }}
         path: mknop/openwrt/*-rootfs.tar.gz
 
     - name: Upload patched firmware to artifact
       uses: actions/upload-artifact@main
-      if: steps.patch.outputs.status == 'success'
       with:
         name: openwrt_${{ env.MKNOP_DEVICE }}_${{ env.FILE_DATE }}
         path: mknop/out/${{ env.MKNOP_DEVICE }}
@@ -126,5 +122,5 @@ jobs:
     - name: Delete workflow runs
       uses: Mattraks/delete-workflow-runs@main
       with:
-        retain_days: 1
-        keep_minimum_runs: 3
+        retain_days: 15
+        keep_minimum_runs: 0
